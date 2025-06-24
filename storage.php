@@ -69,6 +69,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["zipfile"])) {
     }
 }
 
+// Descargar archivo si se solicita
+if (isset($_GET['download_blob'])) {
+  $blobName = $_GET['download_blob'];
+  try {
+    $blob = $blobClient->getBlob($containerName, $blobName);
+    $content = stream_get_contents($blob->getContentStream());
+
+    header('Content-Type: application/zip');
+    header('Content-Disposition: attachment; filename="' . basename($blobName) . '"');
+    header('Content-Length: ' . strlen($content));
+
+    echo $content;
+    exit;
+  } catch (Exception $e) {
+    http_response_code(500);
+    echo "Error al descargar el archivo: " . $e->getMessage();
+    exit;
+  }
+}
+
 // Listar archivos
 try {
     $listOptions = new ListBlobsOptions();
