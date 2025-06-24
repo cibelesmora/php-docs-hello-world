@@ -12,7 +12,7 @@ use MicrosoftAzure\Storage\Common\Internal\Resources;
 
 // Configuración
 $connectionString = getenv("AZURE_STORAGE_CONNECTION_STRING");
-$containerName = "almacencefirecm"; // Cambia esto por el nombre de tu contenedor
+$containerName = "almacencm"; // Cambia esto por el nombre de tu contenedor
 
 $blobClient = BlobRestProxy::createBlobService($connectionString);
 
